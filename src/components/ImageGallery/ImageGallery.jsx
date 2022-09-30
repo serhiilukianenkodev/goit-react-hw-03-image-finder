@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ImageGalleryStyled } from 'components/ImageGallery/ImageGalleryStyled';
 import { fetchImages } from '../../services/ferchImages';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
@@ -36,3 +37,9 @@ export class ImageGallery extends Component {
     );
   }
 }
+
+ImageGallery.propTypes = {
+  query: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  setStatus: PropTypes.func.isRequired,
+};
