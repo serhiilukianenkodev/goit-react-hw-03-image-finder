@@ -14,14 +14,16 @@ export class ImageGallery extends Component {
     if (query !== nextProps.query) this.setState({ images: [] });
     if (query !== nextProps.query || page !== nextProps.page) {
       setStatus('loading');
-      fetchImages(nextProps.query, nextProps.page)
-        .then(data => {
-          this.setState(state => {
-            return { images: [...state.images, ...data.hits] };
-          });
-        })
-        .finally(() => setStatus('resolved'));
-      //   changeLoading();
+      fetchImages(nextProps.query, nextProps.page, setStatus).then(data => {
+        if (data.hits.length < 1) {
+          setStatus('rejected');
+        } else {
+          setStatus('resolved');
+        }
+        this.setState(state => {
+          return { images: [...state.images, ...data.hits] };
+        });
+      });
     }
   }
 

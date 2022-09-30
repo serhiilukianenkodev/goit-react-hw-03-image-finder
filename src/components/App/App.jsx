@@ -5,12 +5,14 @@ import { AppStyled } from 'components/App/AppStyled';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
+import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
 
 export class App extends Component {
   state = {
     searchQuery: '',
     status: 'idle',
     page: 1,
+    errorMessage: '',
   };
 
   setSearchQuery = query => {
@@ -42,6 +44,7 @@ export class App extends Component {
         />
         {status === 'loading' && <Loader />}
         {status === 'resolved' && <Button onClick={this.onLoadMoreClick} />}
+        {status === 'rejected' && <ErrorMessage />}
         <GlobalStyle />
       </AppStyled>
     );
