@@ -1,3 +1,3 @@
 export const ErrorMessage = () => {
-  return <h2>Please enter valid query</h2>;
+  return <h2>Please enter another query</h2>;
 };
