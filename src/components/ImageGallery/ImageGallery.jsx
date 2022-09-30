@@ -7,22 +7,21 @@ export class ImageGallery extends Component {
   state = {
     images: [],
   };
-  componentDidMount() {
-    // console.log(this.props.query);
-  }
+
   componentWillUpdate(nextProps, nextState) {
-    // console.log(this.props.query);
-    // console.log(nextProps.query);
-    if (this.props.query !== nextProps.query) this.setState({ images: [] });
-    if (
-      this.props.query !== nextProps.query ||
-      this.props.page !== nextProps.page
-    )
-      fetchImages(nextProps.query, nextProps.page).then(data => {
-        this.setState(state => {
-          return { images: [...state.images, ...data.hits] };
-        });
-      });
+    const { query, page, setStatus } = this.props;
+    if (query !== nextProps.query) this.setState({ images: [] });
+    if (query !== nextProps.query || page !== nextProps.page) {
+      setStatus('loading');
+      fetchImages(nextProps.query, nextProps.page)
+        .then(data => {
+          this.setState(state => {
+            return { images: [...state.images, ...data.hits] };
+          });
+        })
+        .finally(() => setStatus('resolved'));
+      //   changeLoading();
+    }
   }
 
   render() {
