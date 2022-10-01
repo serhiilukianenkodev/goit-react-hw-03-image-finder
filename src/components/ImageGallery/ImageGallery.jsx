@@ -9,12 +9,12 @@ export class ImageGallery extends Component {
     images: [],
   };
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(prevProps, prevState) {
     const { query, page, setStatus } = this.props;
-    if (query !== nextProps.query) this.setState({ images: [] });
-    if (query !== nextProps.query || page !== nextProps.page) {
+    if (query !== prevProps.query) this.setState({ images: [] });
+    if (query !== prevProps.query || page !== prevProps.page) {
       setStatus('loading');
-      fetchImages(nextProps.query, nextProps.page, setStatus).then(data => {
+      fetchImages(query, page, setStatus).then(data => {
         if (data.hits.length < 1) {
           setStatus('rejected');
         } else {
